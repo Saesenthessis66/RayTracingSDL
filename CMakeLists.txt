@@ -5,7 +5,8 @@ project(RayTracingSDL C)
 find_package(SDL3 REQUIRED)
 
 # Add executable
-add_executable(RayTracingSDL src/main.c)
+add_executable(RayTracingSDL src/main.c
+                             src/objects.c)
 
 # Link SDL3
 target_link_libraries(RayTracingSDL PRIVATE SDL3::SDL3)
