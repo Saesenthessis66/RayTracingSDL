@@ -1,3 +1,4 @@
 build/
 SDL3.dll
 .vscode/
+tests/test.exe
