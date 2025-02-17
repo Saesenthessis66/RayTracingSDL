@@ -1,1 +1,0 @@
-gcc test_objects.c -o test -lm -lSDL3
