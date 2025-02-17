@@ -1,4 +1,4 @@
-#include "../src/objects.c"
+#include "../src/camera.c"
 
 // Function to test the camera and ray mapping functionality
 void testCamera()

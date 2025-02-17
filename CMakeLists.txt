@@ -6,7 +6,7 @@ find_package(SDL3 REQUIRED)
 
 # Add executable
 add_executable(RayTracingSDL src/main.c
-                             src/objects.c)
+                             src/camera_ray.c)
 
 # Link SDL3
 target_link_libraries(RayTracingSDL PRIVATE SDL3::SDL3)
