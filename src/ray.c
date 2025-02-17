@@ -37,6 +37,15 @@ Vector addVectors(Vector u, Vector v)
     return u;
 }
 
+// Function to subtract two vectors
+Vector subtractVectors(Vector u, Vector v)
+{
+    u.x -= v.x;
+    u.y -= v.y;
+    u.z -= v.z;
+    return u;
+}
+
 // Function to normalize a vector (make its length = 1)
 Vector normalizeVector(Vector v) {
     float l = vectorLength(v);
@@ -56,4 +65,10 @@ Vector vectorCrossProduct(Vector u, Vector v)
     cross.y = u.z * v.x - u.x * v.z;
     cross.z = u.x * v.y - u.y * v.x;
     return cross;
+}
+
+// Function to print vector
+void printVector(Vector v)
+{
+    printf("Vector: (%.2f, %.2f, %.2f)\n", v.x, v.y, v.z);
 }
