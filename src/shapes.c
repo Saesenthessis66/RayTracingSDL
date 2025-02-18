@@ -1,33 +1,17 @@
-#include "../src/ray.c"
+#include "shapes.h"
 
-typedef struct {
-    SDL_Color color;
-    float reflectivity;
-} Material;
-
-typedef struct {
-    Vector position;
-    float radius;
-    Material material;
-} Sphere;
-
-typedef struct {
-    Vector position;
-    Vector vector;
-    Vector surfaceNormal;
-    Material material;
-} Plane;
-
-typedef struct {
-    Vector v1, v2, v3;
-    Material material;
-} Triangle;
-
+// Computes the normal vector at a given point on a sphere
+// Formula: N = (P - C) / |P - C|
 Vector computeSphereNormal(Vector point, Sphere sphere)
 {
     return normalizeVector(subtractVectors(point, sphere.position));
 }
 
+// Computes the normal vector for a triangle
+// 1. Compute two edges: edge1 = v2 - v1, edge2 = v3 - v1
+// 2. Compute the normal using the cross product of edge1 and edge2
+// 3. Check if the normal faces the reference point
+// 4. If the normal is flipped, reverse it
 Vector computeTriangleNormal(Triangle triangle, Vector referencePoint)
 {
     Vector edge1 = subtractVectors(triangle.v2, triangle.v1);
@@ -38,7 +22,7 @@ Vector computeTriangleNormal(Triangle triangle, Vector referencePoint)
     // Check if the normal is facing the reference point
     Vector toReference = subtractVectors(referencePoint, triangle.v1);
     
-    // If the normal and reference direction are in opposite directions, flip the normal
+    // Flip the normal if it's pointing in the wrong direction
     if (dotProduct(normal, toReference) < 0)
     {
         normal = multiplyVector(normal, -1);
@@ -46,5 +30,3 @@ Vector computeTriangleNormal(Triangle triangle, Vector referencePoint)
 
     return normal;
 }
-
-// intersect function object and ray

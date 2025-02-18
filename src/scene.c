@@ -1,46 +1,41 @@
-#include"../src/shapes.c"
+#include "scene.h"
 
-typedef struct {
-    Sphere* spheres;
-    Plane* planes;
-    Triangle* triangles;
-    // lightsources arrays
-    int sphereCount, planeCount, triangleCount;
-} Scene;
-
-void freeScene(Scene* scene)
-{
-    free(scene->spheres);
-    free(scene->planes);
-    free(scene->triangles);
-}
+#include <stdio.h>
+#include <stdlib.h>
 
 void initScene(Scene* scene, int maxSpheres, int maxPlanes, int maxTriangles)
 {
-    scene->sphereCount = 0;
-    scene->planeCount = 0;
-    scene->triangleCount = 0;
+    scene->objects.sphereCount = 0;
+    scene->objects.planeCount = 0;
+    scene->objects.triangleCount = 0;
 
     // Allocate memory dynamically
-    scene->spheres = (Sphere*)malloc(maxSpheres * sizeof(Sphere));
-    scene->planes = (Plane*)malloc(maxPlanes * sizeof(Plane));
-    scene->triangles = (Triangle*)malloc(maxTriangles * sizeof(Triangle));
+    scene->objects.spheres = malloc(maxSpheres * sizeof(Sphere));
+    scene->objects.planes = malloc(maxPlanes * sizeof(Plane));
+    scene->objects.triangles = malloc(maxTriangles * sizeof(Triangle));
 
-    if (!scene->spheres || !scene->planes || !scene->triangles)
+    if (!scene->objects.spheres || !scene->objects.planes || !scene->objects.triangles)
     {
         printf("Error in creating scene: Memory allocation failed!\n");
         freeScene(scene);
     }
 }
 
+void freeScene(Scene* scene)
+{
+    free(scene->objects.spheres);
+    free(scene->objects.planes);
+    free(scene->objects.triangles);
+}
+
 void addSphere(Scene* scene, Vector position, float radius, Material material, int maxSpheres)
 {
-    if (scene->sphereCount < maxSpheres)
+    if (scene->objects.sphereCount < maxSpheres)
     {
-        scene->spheres[scene->sphereCount].position = position;
-        scene->spheres[scene->sphereCount].radius = radius;
-        scene->spheres[scene->sphereCount].material = material;
-        scene->sphereCount++;
+        scene->objects.spheres[scene->objects.sphereCount].position = position;
+        scene->objects.spheres[scene->objects.sphereCount].radius = radius;
+        scene->objects.spheres[scene->objects.sphereCount].material = material;
+        scene->objects.sphereCount++;
     }
     else
     {
@@ -50,12 +45,12 @@ void addSphere(Scene* scene, Vector position, float radius, Material material, i
 
 void addPlane(Scene* scene, Vector position, Vector vector, Material material, int maxPlanes)
 {
-    if (scene->planeCount < maxPlanes)
+    if (scene->objects.planeCount < maxPlanes)
     {
-        scene->planes[scene->planeCount].position = position;
-        scene->planes[scene->planeCount].vector = vector;
-        scene->planes[scene->planeCount].material = material;
-        scene->planeCount++;
+        scene->objects.planes[scene->objects.planeCount].position = position;
+        scene->objects.planes[scene->objects.planeCount].vector = vector;
+        scene->objects.planes[scene->objects.planeCount].material = material;
+        scene->objects.planeCount++;
     }
     else
     {
@@ -65,18 +60,16 @@ void addPlane(Scene* scene, Vector position, Vector vector, Material material, i
 
 void addTriangle(Scene* scene, Vector v1, Vector v2, Vector v3, Material material, int maxPlanes)
 {
-    if (scene->triangleCount < maxPlanes)
+    if (scene->objects.triangleCount < maxPlanes)
     {
-        scene->triangles[scene->triangleCount].v1 = v1;
-        scene->triangles[scene->triangleCount].v2 = v2;
-        scene->triangles[scene->triangleCount].v3 = v3;
-        scene->triangles[scene->triangleCount].material = material;
-        scene->triangleCount++;
+        scene->objects.triangles[scene->objects.triangleCount].v1 = v1;
+        scene->objects.triangles[scene->objects.triangleCount].v2 = v2;
+        scene->objects.triangles[scene->objects.triangleCount].v3 = v3;
+        scene->objects.triangles[scene->objects.triangleCount].material = material;
+        scene->objects.triangleCount++;
     }
     else
     {
         printf("Cannot add more triangles, scene limit reached!\n");
     }
 }
-
-// add lightsources functions

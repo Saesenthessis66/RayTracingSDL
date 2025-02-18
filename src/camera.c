@@ -1,14 +1,4 @@
-#include "../src/ray.c"
-
-// Structure representing a camera in 3D space
-typedef struct {
-    Vector position;     // Camera position in world space
-    Vector direction;    // Forward direction of the camera
-    Vector upVector;     // Upward direction of the camera
-    Vector rightVector;  // Rightward direction of the camera (computed from up and direction)
-    float fieldOfView;   // Field of view (FOV) in degrees
-    float aspectRatio;   // Screen width / screen height
-} Camera;
+#include "camera.h"
 
 void initCamera(Camera* camera, Vector pos, Vector dir, Vector up, float fov, int screenWidth, int screenHeight)
 {

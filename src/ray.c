@@ -1,17 +1,7 @@
-#include <SDL3/SDL.h>
+#include "ray.h"
 
 #include <stdio.h>
-
-// Structure representing a 3D vector
-typedef struct{
-    float x, y, z;
-} Vector;
-
-// Structure representing a ray with an origin and a direction
-typedef struct {
-    Vector origin; 
-    Vector direction;
-} Ray;
+#include <stdlib.h>
 
 // Function to compute the length (magnitude) of a vector
 float vectorLength(Vector v)
@@ -57,7 +47,7 @@ Vector normalizeVector(Vector v) {
     return result;
 }
 
-// Function to compute the cross product of two vectors (useful for generating orthogonal directions)
+// Function to compute the cross product of two vectors
 Vector vectorCrossProduct(Vector u, Vector v)
 {
     Vector cross;
@@ -65,6 +55,12 @@ Vector vectorCrossProduct(Vector u, Vector v)
     cross.y = u.z * v.x - u.x * v.z;
     cross.z = u.x * v.y - u.y * v.x;
     return cross;
+}
+
+// Function to compute dot product of two vectors
+float dotProduct(Vector u, Vector v)
+{
+    float ret = u.x * v.x + u.y * v.y + u.z * v.z;
 }
 
 // Function to print vector
