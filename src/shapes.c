@@ -30,3 +30,44 @@ Vector computeTriangleNormal(Triangle triangle, Vector referencePoint)
 
     return normal;
 }
+
+int intersectRaySphere(Ray ray, Sphere sphere, float *t)
+{
+    Vector sphereToRay = subtractVectors(sphere.position, ray.origin); // Vector from ray origin to sphere center
+    float projectionLength = dotProduct(sphereToRay, ray.direction);   // Project onto ray direction
+
+    if (projectionLength < 0) return 0; // Sphere is behind the ray
+
+    float closestApproachSquared = dotProduct(sphereToRay, sphereToRay) - projectionLength * projectionLength;
+
+    if (closestApproachSquared > sphere.radius * sphere.radius) return 0; // Ray misses the sphere
+
+    float intersectionOffset = SDL_sqrtf(sphere.radius * sphere.radius - closestApproachSquared);
+
+    float t0 = projectionLength - intersectionOffset; // First intersection point
+    float t1 = projectionLength + intersectionOffset; // Second intersection point
+
+    if (t0 >= 0)
+    {
+        *t = t0; // Closest valid intersection
+        return 1;
+    }
+    else if (t1 >= 0)
+    {
+        *t = t1; // Ray starts inside the sphere, return the exit point
+        return 1;
+    }
+
+    return 0;
+}
+
+
+int intersectRayPlane(Ray ray, Plane plane, float *t)
+{
+    return 0;
+}
+
+int intersectRayTriangle(Ray ray, Triangle triangle, float *t)
+{
+    return 0;
+}

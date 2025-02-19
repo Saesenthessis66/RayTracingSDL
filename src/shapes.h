@@ -18,9 +18,12 @@ typedef struct {
 
 // Structure representing a plane
 typedef struct {
-    Vector position;      // A point on the plane
-    Vector vector;        // A vector defining the plane's orientation
-    Vector surfaceNormal; // The normal vector of the plane (should be a unit vector)
+    Vector position;      // A point on the plane (origin)
+    Vector surfaceNormal; // The normal vector of the plane
+    Vector u;             // First direction vector (width)
+    Vector v;             // Second direction vector (height)
+    float width;          // Width of the  plane
+    float height;         // Height of the  plane
     Material material;    // Material properties of the plane
 } Plane;
 
@@ -43,5 +46,20 @@ Vector computeSphereNormal(Vector point, Sphere sphere);
 
 // Function to compute the normal vector for a triangle
 Vector computeTriangleNormal(Triangle triangle, Vector referencePoint);
+
+// Function to check if a ray intersects a sphere
+// Returns 1 if there's an intersection, 0 otherwise
+// If an intersection occurs, 't' will store the distance from the ray origin
+int intersectRaySphere(Ray ray, Sphere sphere, float* t);
+
+// Function to check if a ray intersects a plane
+// Returns 1 if there's an intersection, 0 otherwise
+// If an intersection occurs, 't' will store the distance from the ray origin
+int intersectRayPlane(Ray ray, Plane plane, float* t);
+
+// Function to check if a ray intersects a triangle
+// Returns 1 if there's an intersection, 0 otherwise
+// If an intersection occurs, 't' will store the distance from the ray origin
+int intersectRayTriangle(Ray ray, Triangle triangle, float* t);
 
 #endif // SHAPES_H
