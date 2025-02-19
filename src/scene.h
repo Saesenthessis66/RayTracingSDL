@@ -10,11 +10,11 @@ typedef struct {
     SceneLights lights; // Lights contained in the scene (point lights, directional lights, spotlights, and ambient light)
 } Scene;
 
-// Function to free memory allocated for the scene's objects
-void freeScene(Scene* scene);
-
 // Function to initialize a scene with dynamic memory allocation for spheres, planes, and triangles
 void initScene(Scene* scene, int maxSpheres, int maxPlanes, int maxTriangles, int maxPointLights, int maxDirectionalLights, int maxSpotLights);
+
+// Function to free memory allocated for the scene's objects
+void freeScene(Scene* scene);
 
 // Function to add a sphere to the scene
 void addSphere(Scene* scene, Vector position, float radius, Material material, int maxSpheres);

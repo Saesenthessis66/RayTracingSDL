@@ -57,20 +57,35 @@ void addSphere(Scene* scene, Vector position, float radius, Material material, i
     }
 }
 
-void addPlane(Scene* scene, Vector position, Vector vector, Material material, int maxPlanes)
+void addPlane(Scene* scene, Vector position, Vector normal, float width, float height, Material material, int maxPlanes) 
 {
-    if (scene->objects.planeCount < maxPlanes)
+    if (scene->objects.planeCount < maxPlanes) 
     {
-        scene->objects.planes[scene->objects.planeCount].position = position;
-        scene->objects.planes[scene->objects.planeCount].vector = vector;
-        scene->objects.planes[scene->objects.planeCount].material = material;
+        Plane* plane = &scene->objects.planes[scene->objects.planeCount];
+
+        // Set plane properties
+        plane->position = position;
+        plane->surfaceNormal = normalizeVector(normal);
+        plane->width = width;
+        plane->height = height;
+        plane->material = material;
+
+        // Compute basis vectors (u, v) perpendicular to the normal
+        Vector arbitrary = {1, 0, 0}; // Default choice
+        if (fabs(plane->surfaceNormal.x) > 0.9f)  // If normal is too close to (1,0,0), pick another vector
+            arbitrary = (Vector){0, 1, 0};
+
+        plane->u = normalizeVector(vectorCrossProduct(arbitrary, plane->surfaceNormal));  // First tangent vector
+        plane->v = vectorCrossProduct(plane->surfaceNormal, plane->u);  // Second tangent vector (already normalized)
+
         scene->objects.planeCount++;
-    }
-    else
+    } 
+    else 
     {
         printf("Cannot add more planes, scene limit reached!\n");
     }
 }
+
 
 void addTriangle(Scene* scene, Vector v1, Vector v2, Vector v3, Material material, int maxTriangles)
 {
@@ -141,6 +156,9 @@ void setAmbientLight(Scene *scene, LightMaterial material)
 
 int isPointInShadow(Vector point, PointLight *light, Scene *scene)
 {
+    Vector lightDirection = normalizeVector(subtractVectors(light->position, point));
+    
+
     return 0;
 }
 
