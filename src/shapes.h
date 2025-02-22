@@ -38,7 +38,12 @@ typedef struct {
     Sphere* spheres;
     Plane* planes;
     Triangle* triangles;
-    int sphereCount, planeCount, triangleCount;
+    int sphereCount;
+    int planeCount;
+    int triangleCount;
+    int maxSpheres; 
+    int maxPlanes; 
+    int maxTriangles; 
 } Objects;
 
 // Function to compute the normal vector at a given point on a sphere

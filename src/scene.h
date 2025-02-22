@@ -17,22 +17,22 @@ void initScene(Scene* scene, int maxSpheres, int maxPlanes, int maxTriangles, in
 void freeScene(Scene* scene);
 
 // Function to add a sphere to the scene
-void addSphere(Scene* scene, Vector position, float radius, Material material, int maxSpheres);
+void addSphere(Scene* scene, Vector position, float radius, Material material);
 
 // Function to add a plane to the scene
-void addPlane(Scene* scene, Vector position, Vector vector, Material material, int maxPlanes);
+void addPlane(Scene* scene, Vector position, Vector normal, float width, float height, Material material) ;
 
 // Function to add a triangle to the scene
-void addTriangle(Scene* scene, Vector v1, Vector v2, Vector v3, Material material, int maxTriangles);
+void addTriangle(Scene* scene, Vector v1, Vector v2, Vector v3, Material material);
 
 // Function to add a point light
-void addPointLight(Scene* scene, LightMaterial material, Vector position, float range, int maxPointLights);
+void addPointLight(Scene* scene, LightMaterial material, Vector position, float range);
 
 // Function to add a directional light
-void addDirectionalLight(Scene* scene, LightMaterial material, Vector position, Vector direction, int maxDirectionalLights);
+void addDirectionalLight(Scene* scene, LightMaterial material, Vector position, Vector direction);
 
 // Function to add a spotlight
-void addSpotLight(Scene* scene, LightMaterial material, Vector position, Vector direction, float cutOffAngle, int maxSpotLights);
+void addSpotLight(Scene* scene, LightMaterial material, Vector position, Vector direction, float cutOffAngle);
 
 // Function to set ambient light
 void setAmbientLight(Scene* scene, LightMaterial material);
