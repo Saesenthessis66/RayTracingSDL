@@ -16,18 +16,19 @@ typedef struct {
     LightMaterial material; // Material properties of the light (color and intensity)
 } PointLight;
 
-// Structure representing a directional light source (light coming from a specific direction)
-typedef struct {
-    Vector position;    // Position of the light (can be considered as the light's origin)
-    Vector direction;   // Direction of the light (the light is emitted along this vector)
-    LightMaterial material; // Material properties of the light
-} DirectionalLight;
+    // Structure representing a directional light source (light coming from a specific direction)
+    typedef struct {
+        Vector position;    // Position of the light (can be considered as the light's origin)
+        Vector direction;   // Direction of the light (the light is emitted along this vector)
+        LightMaterial material; // Material properties of the light
+    } DirectionalLight;
 
 // Structure representing a spotlight (a cone-shaped light source)
 typedef struct {
     Vector position;    // Position of the spotlight
     Vector direction;   // Direction the spotlight is facing
-    float cutoffAngle;  // The spread of the spotlight (in degrees or radians)
+    float cutoffAngle;      // Outer cutoff angle (hard limit)
+    float innerCutoffAngle; // Inner cutoff angle (full brightness inside this)
     LightMaterial material; // Material properties of the light
 } SpotLight;
 
@@ -45,6 +46,9 @@ typedef struct {
     int pointLightCount;               // Count of point light sources
     int directionalLightCount;         // Count of directional light sources
     int spotLightCount;                // Count of spotlight sources
+    int maxPointLights;                // Max amount of point lights
+    int maxDirectionalLights;          // Max amount of directional lights
+    int maxSpotLights;                 // Max amount of spot lights
 } SceneLights;
 
 // Function to compute the intensity of a point light at a given point in space
@@ -58,14 +62,5 @@ float computeSpotLightIntensity(SpotLight* light, Vector point, Vector normal);
 
 // Function to compute the intensity of the ambient light for the scene
 float computeAmbientLightIntensity(AmbientLight* light);
-
-// Function to compute the direction from a point to a point light source
-Vector computePointLightDirection(PointLight* light, Vector point);
-
-// Function to compute the direction of a directional light source
-Vector computeDirectionalLightDirection(DirectionalLight* light);
-
-// Function to compute the direction of a spotlight from a given point
-Vector computeSpotLightDirection(SpotLight* light, Vector point);
 
 #endif // LIGHT_SOURCES_H

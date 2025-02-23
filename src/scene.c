@@ -143,7 +143,7 @@ void addDirectionalLight(Scene *scene, LightMaterial material, Vector position, 
     }
 }
 
-void addSpotLight(Scene *scene, LightMaterial material, Vector position, Vector direction, float cutOffAngle)
+void addSpotLight(Scene *scene, LightMaterial material, Vector position, Vector direction, float cutOffAngle, float innerCutoffAngle)
 {
     if(scene->lights.spotLightCount < scene->lights.maxSpotLights)
     {
@@ -151,6 +151,7 @@ void addSpotLight(Scene *scene, LightMaterial material, Vector position, Vector 
         scene->lights.spotLights[scene->lights.spotLightCount].material = material; 
         scene->lights.spotLights[scene->lights.spotLightCount].direction = direction;
         scene->lights.spotLights[scene->lights.spotLightCount].cutoffAngle = cutOffAngle;
+        scene->lights.spotLights[scene->lights.spotLightCount].innerCutoffAngle = innerCutoffAngle;
         scene->lights.spotLightCount++;
     }
     else

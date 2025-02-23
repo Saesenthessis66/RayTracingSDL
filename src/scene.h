@@ -32,7 +32,7 @@ void addPointLight(Scene* scene, LightMaterial material, Vector position, float 
 void addDirectionalLight(Scene* scene, LightMaterial material, Vector position, Vector direction);
 
 // Function to add a spotlight
-void addSpotLight(Scene* scene, LightMaterial material, Vector position, Vector direction, float cutOffAngle);
+void addSpotLight(Scene* scene, LightMaterial material, Vector position, Vector direction, float cutOffAngle, float innerCutoffAngle);
 
 // Function to set ambient light
 void setAmbientLight(Scene* scene, LightMaterial material);
