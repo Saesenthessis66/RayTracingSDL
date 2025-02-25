@@ -60,7 +60,7 @@ Vector vectorCrossProduct(Vector u, Vector v)
 // Function to compute dot product of two vectors
 float dotProduct(Vector u, Vector v)
 {
-    float ret = u.x * v.x + u.y * v.y + u.z * v.z;
+    return u.x * v.x + u.y * v.y + u.z * v.z;
 }
 
 // Function to print vector

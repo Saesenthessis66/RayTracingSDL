@@ -5,11 +5,12 @@ void initCamera(Camera* camera, Vector pos, Vector dir, Vector up, float fov, in
     camera->position = pos;
     camera->direction = normalizeVector(dir); // Ensure direction is normalized
     camera->upVector = normalizeVector(up);   // Ensure up vector is normalized
+
     camera->fieldOfView = fov;
     camera->aspectRatio = (float)screenWidth / (float)screenHeight; // Compute aspect ratio
 
     // Compute the right vector using the cross product of up and direction
-    camera->rightVector = normalizeVector(vectorCrossProduct(camera->upVector, camera->direction));
+    camera->rightVector = normalizeVector(vectorCrossProduct(camera->direction, camera->upVector));
 
     // Recompute the up vector to ensure it's truly perpendicular to both direction and right vectors
     camera->upVector = vectorCrossProduct(camera->rightVector, camera->direction);

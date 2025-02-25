@@ -33,11 +33,27 @@ FetchContent_Declare(
 )
 FetchContent_MakeAvailable(Unity)
 
-# Create the test executable
-add_executable(run_tests
-    tests/test_main.c
-    ${unity_SOURCE_DIR}/src/unity.c  # Compile unity.c directly into the test executable
+# Create test executable
+add_executable(run_tests 
+    tests/test_main.c   # Single main file
+    tests/test_ray.c 
+    tests/test_camera.c
+    tests/test_shapes.c
+    tests/test_lights.c
+    tests/test_scene.c
+    src/ray.c 
+    src/camera.c
+    src/shapes.c
+    src/light_sources.c
+    src/scene.c
+    ${unity_SOURCE_DIR}/src/unity.c
 )
+
+# Ensure test executable includes the headers
+target_include_directories(run_tests PRIVATE include)
+
+# Link the test executable properly
+target_link_libraries(run_tests PRIVATE unity SDL3::SDL3)
 
 # Include Unity headers
 target_include_directories(run_tests PRIVATE ${unity_SOURCE_DIR}/src)

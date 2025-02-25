@@ -23,13 +23,13 @@ float computeDirectionalLightIntensity(DirectionalLight *light, Vector normal)
 {
     // Compute the influence of the light on the surface using the dot product
     // The dot product measures how aligned the surface normal is with the light direction
-    float influence = dotProduct(normal, normalizeVector(light->direction));
+    float alignment = dotProduct(normal, normalizeVector(light->direction));
 
-    // If the influence is negative, the surface is facing away from the light, so return 0 intensity
-    if (influence < 0) return 0.0f;
+    // If the alignment is not negative, the surface is facing away from the light, so return 0 intensity
+    if (alignment >= 0) return 0.0f;
 
-    // Scale the light intensity based on the influence and clamp it between 0 and 1
-    return SDL_clamp(light->material.intensity * influence, 0.0f, 1.0f);
+    // Scale the light intensity based on the inversed alignement and clamp it between 0 and 1
+    return SDL_clamp(light->material.intensity * alignment * -1.0f, 0.0f, 1.0f);
 }
 
 float computeSpotLightIntensity(SpotLight *light, Vector point, Vector normal)
