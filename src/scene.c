@@ -219,7 +219,7 @@ int isPointInShadow(Vector point, PointLight *light, Scene *scene)
 int isPointInShadowDir(Vector point, DirectionalLight *light, Scene *scene)
 {        
     // Create a small offset in the direction of the light to prevent self-shadowing
-    Ray shadowRay = {addVectors(point, multiplyVector(light->direction, EPSILON)), light->direction};
+    Ray shadowRay = {addVectors(point, multiplyVector(light->direction, EPSILON)), multiplyVector(light->direction, -1)};
 
     float distance; // Variable to store the intersection distance
 
@@ -267,7 +267,7 @@ int isPointInShadowSpot(Vector point, SpotLight *light, Scene *scene)
     float cosAngle = dotProduct(light->direction, normalizeVector(lightDirection));
 
     // Check if point is in spotlight range
-    if(cosAngle < SDL_cosf(light->cutoffAngle * SDL_PI_F / 180)) return 0;
+    if(cosAngle > SDL_cosf(light->cutoffAngle * SDL_PI_F / 180)) return 0;
 
     // Apply a small offset to prevent self-shadowing artifacts (avoid floating-point errors)
     Vector offset = multiplyVector(lightDirection, EPSILON);
