@@ -1,5 +1,7 @@
 #include "shapes.h"
 
+#define EPSILON 0.0001
+
 // Computes the normal vector at a given point on a sphere
 // Formula: N = (P - C) / |P - C|
 Vector computeSphereNormal(Vector point, Sphere sphere)
@@ -97,54 +99,39 @@ int intersectRayPlane(Ray ray, Plane plane, float *t)
 
 int intersectRayTriangle(Ray ray, Triangle triangle, float *t)
 {
-    // Compute the triangle's normal
-    Vector triangleNormal = computeTriangleNormal(triangle, ray.origin);
-
-    // Compute the dot product between the normal and the ray direction
-    float normalDotRayDir = dotProduct(triangleNormal, ray.direction);
-
-    // If the dot product is 0, the ray is parallel to the triangle (no intersection)
-    if (normalDotRayDir == 0) return 0;
-
-    // Compute the intersection distance along the ray
-    float intersectionDistance = dotProduct(subtractVectors(triangle.v1, ray.origin), triangleNormal) / normalDotRayDir;
-
-    // If the intersection distance is negative, the triangle is behind the ray origin (no valid intersection)
-    if (intersectionDistance < 0) return 0;
-
-    // Compute the intersection point
-    Vector intersectionPoint = addVectors(ray.origin, multiplyVector(ray.direction, intersectionDistance));
-
-    // Compute edges of the triangle
+    // Compute the two edges of the triangle
     Vector edge1 = subtractVectors(triangle.v2, triangle.v1);
     Vector edge2 = subtractVectors(triangle.v3, triangle.v1);
-    Vector vector = subtractVectors(intersectionPoint, triangle.v1);
 
-    // Compute dot products for barycentric coordinates
-    float dot00 = dotProduct(edge1, edge1);
-    float dot01 = dotProduct(edge1, edge2);
-    float dot02 = dotProduct(edge1, vector);
-    float dot11 = dotProduct(edge2, edge2);
-    float dot12 = dotProduct(edge2, vector);
+    // Compute the determinant using the cross product of ray direction and edge2
+    Vector pVector = vectorCrossProduct(ray.direction, edge2);
+    float determinant = dotProduct(edge1, pVector);
 
-    // Compute determinant
-    float determinant = (dot00 * dot11) - (dot01 * dot01);
+    // Check if the determinant is close to zero (ray is parallel to the triangle)
+    if (SDL_fabs(determinant) < EPSILON) return 0;
 
-    // If determinant is zero, the triangle is degenerate (no valid intersection)
-    if (determinant == 0) return 0;
+    // Compute the inverse determinant for efficiency
+    float invDeterminant = 1.0f / determinant;
 
-    // Compute barycentric coordinates
-    float invDeterminant = 1 / determinant;
-    float beta = ((dot11 * dot02) - (dot01 * dot12)) * invDeterminant;
-    float gamma = ((dot00 * dot12) - (dot01 * dot02)) * invDeterminant;
-    float alpha = 1.0f - beta - gamma;
+    // Compute the vector from the triangle's first vertex to the ray origin
+    Vector tVector = subtractVectors(ray.origin, triangle.v1);
 
-    // Check if the intersection point is inside the triangle
-    if (alpha >= 0 && beta >= 0 && gamma >= 0)
-    {
-        *t = intersectionDistance;
-        return 1; // Intersection occurred
-    }
+    // Compute barycentric coordinate u
+    float u = dotProduct(tVector, pVector) * invDeterminant;
+    if (u < 0 || u > 1) return 0; // Outside the triangle
 
-    return 0; // No intersection
+    // Compute qVector (cross product of tVector and edge1)
+    Vector qVector = vectorCrossProduct(tVector, edge1);
+
+    // Compute barycentric coordinate v
+    float v = dotProduct(ray.direction, qVector) * invDeterminant;
+    if (v < 0 || (u + v) > 1) return 0; // Outside the triangle
+
+    // Compute the intersection distance t along the ray
+    *t = dotProduct(edge2, qVector) * invDeterminant;
+
+    // Ensure the intersection is in front of the ray origin (not behind)
+    if (*t < 0) return 0;
+
+    return 1; // Intersection detected
 }
