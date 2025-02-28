@@ -17,6 +17,7 @@ add_executable(RayTracingSDL
     src/shapes.c
     src/light_sources.c
     src/scene.c
+    src/illumination.c
 )
 
 # Link SDL3

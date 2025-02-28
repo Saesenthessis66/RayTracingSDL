@@ -3,11 +3,12 @@
 
 #include "ray.h"  // Include the ray header to use Vector and Ray types
 
-// Structure representing the material properties of a shape
-typedef struct {
-    SDL_Color color;      // RGBA color of the material
-    float reflectivity;   // Reflectivity factor (0 to 1)
-} Material;
+    // Structure representing the material properties of a shape
+    typedef struct {
+        SDL_Color color;      // RGBA color of the material
+        float reflectivity;   // Reflectivity factor (0 to 1)
+        float shininess;      // Shininess factor for specular highlights (higher = sharper highlights)
+    } Material;
 
 // Structure representing a sphere
 typedef struct {
