@@ -35,6 +35,12 @@ void test_isPointInShadow(void);
 void test_isPointInShadowDir(void);
 void test_isPointInShadowSpot(void);
 
+void test_ComputePointLightDiffuse_PointInShadow(void);
+void test_ComputePointLightDiffuse_ZeroLightIntensity(void);
+void test_ComputePointLightDiffuse_NormalFacingAway(void);
+void test_ComputePointLightDiffuse_ValidDiffuse(void);
+
+
 void setUp(void) {}   // Runs before each test (optional)
 void tearDown(void) {} // Runs after each test (optional)
 
@@ -79,6 +85,12 @@ int main(void) {
     RUN_TEST(test_isPointInShadow);
     RUN_TEST(test_isPointInShadowDir);
     RUN_TEST(test_isPointInShadowSpot);
+
+    printf("\n===== Running Illumination Tests =====\n");
+    RUN_TEST(test_ComputePointLightDiffuse_PointInShadow);
+    RUN_TEST(test_ComputePointLightDiffuse_ZeroLightIntensity);
+    RUN_TEST(test_ComputePointLightDiffuse_NormalFacingAway);
+    RUN_TEST(test_ComputePointLightDiffuse_ValidDiffuse);
 
     return UNITY_END();
 }
