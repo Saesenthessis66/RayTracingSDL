@@ -42,11 +42,13 @@ add_executable(run_tests
     tests/test_shapes.c
     tests/test_lights.c
     tests/test_scene.c
+    tests/test_illumination.c
     src/ray.c 
     src/camera.c
     src/shapes.c
     src/light_sources.c
     src/scene.c
+    src/illumination.c
     ${unity_SOURCE_DIR}/src/unity.c
 )
 
