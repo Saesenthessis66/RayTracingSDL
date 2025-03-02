@@ -179,7 +179,7 @@ void test_isPointInShadowSpot(void){
 
     LightMaterial material = {{255, 255, 255, 255}, 1.0f};
     Vector position = {0.0f, 5.0f, 0.0f};
-    Vector direction = {0.0f, -1.0f, 0.0f};
+    Vector direction = {0.0f, 1.0f, 0.0f};
 
     addSpotLight(&scene, material, position, direction, 30.0f, 15.0f);
 

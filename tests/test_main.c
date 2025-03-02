@@ -42,6 +42,10 @@ void test_ComputePointLightDiffuse_ValidDiffuse(void);
 void test_ComputeDirectionalLightDiffuse_PointInShadow(void);
 void test_ComputeDirectionalLightDiffuse_NormalFacingAway(void);
 void test_ComputeDirectionalLightDiffuse_ValidDiffuse(void);
+void test_ComputeSpotLightDiffuse_PointInShadow(void);
+void test_ComputeSpotLightDiffuse_ZeroLightIntensity(void);
+void test_ComputeSpotLightDiffuse_NormalFacingAway(void);
+void test_ComputeSpotLightDiffuse_ValidDiffuse(void);
 
 
 void setUp(void) {}   // Runs before each test (optional)
@@ -97,6 +101,10 @@ int main(void) {
     RUN_TEST(test_ComputeDirectionalLightDiffuse_PointInShadow);
     RUN_TEST(test_ComputeDirectionalLightDiffuse_NormalFacingAway);
     RUN_TEST(test_ComputeDirectionalLightDiffuse_ValidDiffuse);
+    RUN_TEST(test_ComputeSpotLightDiffuse_PointInShadow);
+    RUN_TEST(test_ComputeSpotLightDiffuse_ZeroLightIntensity);
+    RUN_TEST(test_ComputeSpotLightDiffuse_NormalFacingAway);
+    RUN_TEST(test_ComputeSpotLightDiffuse_ValidDiffuse);
 
     return UNITY_END();
 }
