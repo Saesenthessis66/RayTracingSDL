@@ -107,8 +107,8 @@ int intersectRayTriangle(Ray ray, Triangle triangle, float *t)
     Vector pVector = vectorCrossProduct(ray.direction, edge2);
     float determinant = dotProduct(edge1, pVector);
 
-    // Check if the determinant is close to zero (ray is parallel to the triangle)
-    if (SDL_fabs(determinant) < EPSILON) return 0;
+    // Ensure the triangle is **facing the ray** (CCW order from ray perspective)
+    if (determinant < EPSILON) return 0;  // Cull back-facing or parallel triangles
 
     // Compute the inverse determinant for efficiency
     float invDeterminant = 1.0f / determinant;
