@@ -134,7 +134,7 @@ void addDirectionalLight(Scene *scene, LightMaterial material, Vector position, 
     {
         scene->lights.directionalLights[scene->lights.directionalLightCount].position = position;
         scene->lights.directionalLights[scene->lights.directionalLightCount].material = material;
-        scene->lights.directionalLights[scene->lights.directionalLightCount].direction = direction;
+        scene->lights.directionalLights[scene->lights.directionalLightCount].direction = normalizeVector(direction);
         scene->lights.directionalLightCount++;
     }
     else
@@ -149,7 +149,7 @@ void addSpotLight(Scene *scene, LightMaterial material, Vector position, Vector 
     {
         scene->lights.spotLights[scene->lights.spotLightCount].position = position;
         scene->lights.spotLights[scene->lights.spotLightCount].material = material; 
-        scene->lights.spotLights[scene->lights.spotLightCount].direction = direction;
+        scene->lights.spotLights[scene->lights.spotLightCount].direction = normalizeVector(direction);
         scene->lights.spotLights[scene->lights.spotLightCount].cutoffAngle = cutOffAngle;
         scene->lights.spotLights[scene->lights.spotLightCount].innerCutoffAngle = innerCutoffAngle;
         scene->lights.spotLightCount++;
@@ -264,10 +264,10 @@ int isPointInShadowSpot(Vector point, SpotLight *light, Scene *scene)
     Vector lightDirection = normalizeVector(subtractVectors(light->position, point));
 
     // Compute angle between spotlight direction and vector the point to the light source
-    float cosAngle = dotProduct(light->direction, normalizeVector(lightDirection));
+    float cosAngle = dotProduct(light->direction, lightDirection);
 
-    // Check if point is in spotlight range
-    if(cosAngle > SDL_cosf(light->cutoffAngle * SDL_PI_F / 180)) return 0;
+    // If the point is outside the spotlight cone, it's in shadow
+    if (cosAngle < SDL_cosf(light->cutoffAngle * SDL_PI_F / 180)) return 1;
 
     // Apply a small offset to prevent self-shadowing artifacts (avoid floating-point errors)
     Vector offset = multiplyVector(lightDirection, EPSILON);

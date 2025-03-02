@@ -28,49 +28,44 @@ float computePointLightDiffuse(PointLight *light, Vector point, Vector normal, S
 
 float computeDirectionalLightDiffuse(DirectionalLight *light, Vector point, Vector normal, Scene* scene)
 {
-        // Check if the point is in shadow from this light source
-        if (isPointInShadowDir(point, light, scene)) return 0.0f;
+    // Check if the point is in shadow from this light source
+    if (isPointInShadowDir(point, light, scene)) return 0.0f;
 
-        // Compute light intensity at the given point
-        float lightIntensity = computeDirectionalLightIntensity(light, normal);
-    
-        // If intensity is zero or negative, return immediately (no contribution)
-        if (lightIntensity <= 0.0f) return 0.0f;
-    
-        // Compute the diffuse factor using Lambert's cosine law (dot product of normal and light direction)
-        float diffuseFactor = dotProduct(normal, light->direction);
-    
-        // If the surface is facing away from the light, there is no diffuse lighting
-        if (diffuseFactor <= 0.0f) return 0.0f;
-    
-        // Compute the final diffuse contribution, clamping the result between 0 and 1
-        float diffuseLight = SDL_clamp(diffuseFactor, 0.0f, 1.0f) * lightIntensity;
-    
-        return diffuseLight;
+    // Compute light intensity at the given point
+    float lightIntensity = computeDirectionalLightIntensity(light, normal);
+
+    // Compute the diffuse factor using Lambert's cosine law
+    float diffuseFactor = dotProduct(normal, light->direction);
+
+    // If the surface is facing away from the light, there is no diffuse lighting
+    if (diffuseFactor <= 0.0f) return 0.0f;
+
+    // Compute final diffuse contribution
+    return diffuseFactor * lightIntensity;
 }
 
 float computeSpotLightDiffuse(SpotLight *light, Vector point, Vector normal, Scene* scene)
 {
-        // Check if the point is in shadow from this light source
-        if (isPointInShadowSpot(point, light, scene)) return 0.0f;
+    // Check if the point is in shadow from this light source
+    if (isPointInShadowSpot(point, light, scene)) return 0.0f;
 
-        // Compute light intensity at the given point
-        float lightIntensity = computeSpotLightIntensity(light, point, normal);
-    
-        // If intensity is zero or negative, return immediately (no contribution)
-        if (lightIntensity <= 0.0f) return 0.0f;
-    
-    
-        // Compute the diffuse factor using Lambert's cosine law (dot product of normal and light direction)
-        float diffuseFactor = dotProduct(normal, light->direction);
-    
-        // If the surface is facing away from the light, there is no diffuse lighting
-        if (diffuseFactor <= 0.0f) return 0.0f;
-    
-        // Compute the final diffuse contribution, clamping the result between 0 and 1
-        float diffuseLight = SDL_clamp(diffuseFactor, 0.0f, 1.0f) * lightIntensity;
-    
-        return diffuseLight;
+    // Compute light intensity at the given point
+    float lightIntensity = computeSpotLightIntensity(light, point, normal);
+
+    // If intensity is zero or negative, return immediately (no contribution)
+    if (lightIntensity <= 0.0f) return 0.0f;
+
+
+    // Compute the diffuse factor using Lambert's cosine law (dot product of normal and light direction)
+    float diffuseFactor = dotProduct(normal, light->direction);
+
+    // If the surface is facing away from the light, there is no diffuse lighting
+    if (diffuseFactor <= 0.0f) return 0.0f;
+
+    // Compute the final diffuse contribution, clamping the result between 0 and 1
+    float diffuseLight = SDL_clamp(diffuseFactor, 0.0f, 1.0f) * lightIntensity;
+
+    return diffuseLight;
 }
 
 float computePointLightSpecular(PointLight *light, Vector point, Vector normal, Vector viewDirection, float shininess, Scene* scene)
