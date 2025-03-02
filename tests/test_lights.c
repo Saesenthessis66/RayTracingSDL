@@ -17,7 +17,7 @@ void test_computePointLightIntensity(void) {
 
 
 void test_computeDirectionalLightIntensity(void) {
-    DirectionalLight light = {{0.0f, 10.0f, 0.0f}, {0.0f, -1.0f, 0.0f}, {{255, 255, 255, 255}, 1.0f}};
+    DirectionalLight light = {{0.0f, 10.0f, 0.0f}, {0.0f, 1.0f, 0.0f}, {{255, 255, 255, 255}, 1.0f}};
     Vector normal = {0.0f, 1.0f, 0.0f};
 
     float intensity = computeDirectionalLightIntensity(&light, normal);
@@ -26,7 +26,7 @@ void test_computeDirectionalLightIntensity(void) {
 }
 
 void test_computeSpotLightIntensity(void) {
-    SpotLight light = {{0.0f, 5.0f, 0.0f}, {0.0f, -1.0f, 0.0f}, 30.0f, 15.0f, {{255, 255, 255, 255}, 1.0f}};
+    SpotLight light = {{0.0f, 5.0f, 0.0f}, {0.0f, 1.0f, 0.0f}, 30.0f, 15.0f, {{255, 255, 255, 255}, 1.0f}};
     Vector point = {0.0f, 0.0f, 0.0f};
     Vector normal = {0.0f, 1.0f, 0.0f};
 

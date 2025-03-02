@@ -219,7 +219,7 @@ int isPointInShadow(Vector point, PointLight *light, Scene *scene)
 int isPointInShadowDir(Vector point, DirectionalLight *light, Scene *scene)
 {        
     // Create a small offset in the direction of the light to prevent self-shadowing
-    Ray shadowRay = {addVectors(point, multiplyVector(light->direction, EPSILON)), multiplyVector(light->direction, -1)};
+    Ray shadowRay = {addVectors(point, multiplyVector(light->direction, EPSILON)),light->direction};
 
     float distance; // Variable to store the intersection distance
 

@@ -16,12 +16,12 @@ typedef struct {
     LightMaterial material; // Material properties of the light (color and intensity)
 } PointLight;
 
-    // Structure representing a directional light source (light coming from a specific direction)
-    typedef struct {
-        Vector position;    // Position of the light (can be considered as the light's origin)
-        Vector direction;   // Direction of the light (the light is emitted along this vector)
-        LightMaterial material; // Material properties of the light
-    } DirectionalLight;
+// Structure representing a directional light source (light coming from a specific direction)
+typedef struct {
+    Vector position;    // Position of the light (can be considered as the light's origin)
+    Vector direction;   // Direction of the light (the light is emitted along this vector)
+    LightMaterial material; // Material properties of the light
+} DirectionalLight;
 
 // Structure representing a spotlight (a cone-shaped light source)
 typedef struct {

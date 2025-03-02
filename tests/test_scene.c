@@ -158,7 +158,7 @@ void test_isPointInShadowDir(void){
 
     LightMaterial material = {{255, 255, 255, 255}, 1.0f};
     Vector position = {0.0f, 5.0f, 0.0f};
-    Vector direction = {0.0f, -1.0f, 0.0f};
+    Vector direction = {0.0f, 1.0f, 0.0f};
 
     addDirectionalLight(&scene, material, position, direction);
 
