@@ -343,19 +343,82 @@ void test_ComputePointLightSpecular_PartialReflection(void)
 }
 
 // Test case: Normal facing away from light, no specular reflection expected
-void test_ComputeDirectionalLightSpecular_NormalFacingAway(void);
+void test_ComputeDirectionalLightSpecular_NormalFacingAway(void)
+{
+    Scene testScene;
+    DirectionalLight testLight;
+    Vector testPoint;
+    Vector testNormal;
+
+    // Initialize scene
+    initScene(&testScene,5,5,5,5,5,5);
+
+    LightMaterial lightMaterial = (LightMaterial){{255, 255, 255, 255}, 0.5f};
+    Vector lightDirection = normalizeVector((Vector){1, 1, 0});
+
+    testLight = (DirectionalLight){(Vector){0, 0, 0}, lightDirection, lightMaterial};
+
+    testPoint = (Vector){0, 0, 0};
+    testNormal = normalizeVector((Vector){0, -1, 0});
+
+    Vector viewDir = normalizeVector((Vector){0, 2, -2}); 
+
+    float result = computeDirectionalLightSpecular(&testLight, testPoint, testNormal, viewDir, 32.0f ,&testScene);
+    TEST_ASSERT_FLOAT_WITHIN(0.001f, 0.0f, result);
+}
 
 // Test case: Perfect specular reflection with aligned vectors
-void test_ComputeDirectionalLightSpecular_PerfectReflection(void);
+void test_ComputeDirectionalLightSpecular_PerfectReflection(void)
+{
+    Scene testScene;
+    DirectionalLight testLight;
+    Vector testPoint;
+    Vector testNormal;
+
+    // Initialize scene
+    initScene(&testScene,5,5,5,5,5,5);
+
+    LightMaterial lightMaterial = (LightMaterial){{255, 255, 255, 255}, 0.5f};
+    Vector lightDirection = normalizeVector((Vector){0, 1, -1});
+
+    testLight = (DirectionalLight){(Vector){0, 0, 0}, lightDirection, lightMaterial};
+
+    testPoint = (Vector){0, 0, 0};
+    testNormal = normalizeVector((Vector){0, 1, -1});
+
+    Vector viewDir = normalizeVector((Vector){0, 1, -1}); 
+
+    float result = computeDirectionalLightSpecular(&testLight, testPoint, testNormal, viewDir, 32.0f ,&testScene);
+    
+    TEST_ASSERT_FLOAT_WITHIN(0.001f, lightMaterial.intensity, result);
+}
 
 // Test case: Partial specular reflection due to angled light source
-void test_ComputeDirectionalLightSpecular_PartialReflection(void);
+void test_ComputeDirectionalLightSpecular_PartialReflection(void)
+{
+    Scene testScene;
+    DirectionalLight testLight;
+    Vector testPoint;
+    Vector testNormal;
 
-// Test case: High shininess results in a small sharp highlight
-void test_ComputeDirectionalLightSpecular_HighShininess(void);
+    // Initialize scene
+    initScene(&testScene,5,5,5,5,5,5);
 
-// Test case: Low shininess results in a broad weak highlight
-void test_ComputeDirectionalLightSpecular_LowShininess(void);
+    LightMaterial lightMaterial = (LightMaterial){{255, 255, 255, 255}, 0.5f};
+    Vector lightDirection = normalizeVector((Vector){0, 1, -1});
+
+    testLight = (DirectionalLight){(Vector){0, 0, 0}, lightDirection, lightMaterial};
+
+    testPoint = (Vector){0, 0, 0};
+    testNormal = normalizeVector((Vector){0, 1, 0});
+
+    Vector viewDir = normalizeVector((Vector){0, 1, 1}); 
+
+    float result = computeDirectionalLightSpecular(&testLight, testPoint, testNormal, viewDir, 32.0f ,&testScene);
+   
+    TEST_ASSERT_GREATER_THAN_FLOAT(0.0f, result);
+    TEST_ASSERT_LESS_THAN_FLOAT(1.0f, result);  
+}
 
 // Test case: Point in shadow, no specular contribution
 void test_ComputeDirectionalLightSpecular_PointInShadow(void);
@@ -368,12 +431,6 @@ void test_ComputeSpotLightSpecular_PerfectReflection(void);
 
 // Test case: Point at the edge of the spotlight cone, weaker reflection
 void test_ComputeSpotLightSpecular_EdgeOfCone(void);
-
-// Test case: High shininess results in a small sharp highlight
-void test_ComputeSpotLightSpecular_HighShininess(void);
-
-// Test case: Low shininess results in a broad highlight
-void test_ComputeSpotLightSpecular_LowShininess(void);
 
 // Test case: Point in shadow, no specular contribution
 void test_ComputeSpotLightSpecular_PointInShadow(void);

@@ -107,7 +107,7 @@ float computeDirectionalLightSpecular(DirectionalLight *light, Vector point, Vec
     if (isPointInShadowDir(point, light, scene)) return 0.0f;
 
     // Compute light intensity at the given point
-    float lightIntensity = computeDirectionalLightIntensity(light, point);
+    float lightIntensity = computeDirectionalLightIntensity(light, normal);
 
     // If intensity is zero or negative, return immediately (no contribution)
     if (lightIntensity <= 0.0f) return 0.0f;
