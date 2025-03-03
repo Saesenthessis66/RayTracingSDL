@@ -421,7 +421,33 @@ void test_ComputeDirectionalLightSpecular_PartialReflection(void)
 }
 
 // Test case: Point in shadow, no specular contribution
-void test_ComputeDirectionalLightSpecular_PointInShadow(void);
+void test_ComputeDirectionalLightSpecular_PointInShadow(void)
+{
+    Scene testScene;
+    DirectionalLight testLight;
+    Vector testPoint;
+    Plane shadowCastingPlane;
+
+    // Initialize scene
+    initScene(&testScene,5,5,5,5,5,5);
+
+    Material planeMaterial = (Material){{255, 255, 255, 255}, 0.5f, 0.5f};
+    Vector planePosition = (Vector){0, 1, 0};
+    Vector planeNormal = (Vector){0, 1, 0};
+
+    addPlane(&testScene,planePosition, planeNormal, 5, 5, planeMaterial);
+
+    LightMaterial lightMaterial = (LightMaterial){{255, 255, 255, 255}, 0.5f};
+    Vector lightDirection = normalizeVector((Vector){1, 1, 0});
+
+    testLight = (DirectionalLight){(Vector){0, 0, 0}, lightDirection, lightMaterial};
+
+    testPoint = (Vector){0, 0, 0};
+    Vector viewDir = normalizeVector((Vector){0, 1, 1}); 
+
+    float result = computeDirectionalLightSpecular(&testLight, testPoint, planeNormal, viewDir, 32.0f, &testScene);
+    TEST_ASSERT_FLOAT_WITHIN(0.001f, 0.0f, result);
+}
 
 // Test case: Point outside the spotlight cone, no specular reflection
 void test_ComputeSpotLightSpecular_PointOutsideCone(void);
