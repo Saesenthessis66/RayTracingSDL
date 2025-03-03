@@ -46,6 +46,9 @@ void test_ComputeSpotLightDiffuse_PointInShadow(void);
 void test_ComputeSpotLightDiffuse_ZeroLightIntensity(void);
 void test_ComputeSpotLightDiffuse_NormalFacingAway(void);
 void test_ComputeSpotLightDiffuse_ValidDiffuse(void);
+void test_ComputePointLightSpecular_PointInShadow(void);
+void test_ComputePointLightSpecular_PerfectReflection(void);
+void test_ComputePointLightSpecular_PartialReflection(void);
 
 
 void setUp(void) {}   // Runs before each test (optional)
@@ -105,6 +108,9 @@ int main(void) {
     RUN_TEST(test_ComputeSpotLightDiffuse_ZeroLightIntensity);
     RUN_TEST(test_ComputeSpotLightDiffuse_NormalFacingAway);
     RUN_TEST(test_ComputeSpotLightDiffuse_ValidDiffuse);
+    RUN_TEST(test_ComputePointLightSpecular_PointInShadow);
+    RUN_TEST(test_ComputePointLightSpecular_PerfectReflection);
+    RUN_TEST(test_ComputePointLightSpecular_PartialReflection);
 
     return UNITY_END();
 }
