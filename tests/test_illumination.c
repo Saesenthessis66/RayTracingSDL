@@ -450,13 +450,107 @@ void test_ComputeDirectionalLightSpecular_PointInShadow(void)
 }
 
 // Test case: Point outside the spotlight cone, no specular reflection
-void test_ComputeSpotLightSpecular_PointOutsideCone(void);
+void test_ComputeSpotLightSpecular_PointOutsideCone(void)
+{
+    Scene testScene;
+    SpotLight testLight;
+    Vector testPoint;
+    Vector testNormal;
+
+    initScene(&testScene, 5, 5, 5, 5, 5, 5);
+
+    LightMaterial lightMaterial = (LightMaterial){{255, 255, 255, 255}, 1.0f};
+    Vector lightDirection = normalizeVector((Vector){0, 1, 0});
+
+    testLight = (SpotLight){(Vector){0, 1, 0}, lightDirection, 30.0f, 15.0f, lightMaterial};
+
+    testPoint = (Vector){1, 0, 0};
+    testNormal = normalizeVector((Vector){0, 1, 0});
+
+    Vector viewDir = normalizeVector((Vector){0, 1, 0});
+
+    float result = computeSpotLightSpecular(&testLight, testPoint, testNormal,viewDir, 32.0f, &testScene);
+    TEST_ASSERT_FLOAT_WITHIN(0.001f, 0.0f, result);   
+}
 
 // Test case: Point inside the spotlight cone, perfect reflection
-void test_ComputeSpotLightSpecular_PerfectReflection(void);
+void test_ComputeSpotLightSpecular_PerfectReflection(void)
+{
+    Scene testScene;
+    SpotLight testLight;
+    Vector testPoint;
+    Vector testNormal;
+
+    initScene(&testScene, 5, 5, 5, 5, 5, 5);
+
+    LightMaterial lightMaterial = (LightMaterial){{255, 255, 255, 255}, 1.0f};
+    Vector lightDirection = normalizeVector((Vector){0, 1, 0});
+
+    testLight = (SpotLight){(Vector){0, 1, 0}, lightDirection, 30.0f, 15.0f, lightMaterial};
+
+    testPoint = (Vector){0, 0, 0};
+    testNormal = normalizeVector((Vector){0, 1, 0});
+
+    Vector viewDir = normalizeVector((Vector){0, 1, 0});
+
+    float result = computeSpotLightSpecular(&testLight, testPoint, testNormal,viewDir, 32.0f, &testScene);
+    TEST_ASSERT_FLOAT_WITHIN(0.001f, 1.0f, result);   
+}
 
 // Test case: Point at the edge of the spotlight cone, weaker reflection
-void test_ComputeSpotLightSpecular_EdgeOfCone(void);
+void test_ComputeSpotLightSpecular_EdgeOfCone(void)
+{
+    Scene testScene;
+    SpotLight testLight;
+    Vector testPoint;
+    Vector testNormal;
+
+    initScene(&testScene, 5, 5, 5, 5, 5, 5);
+
+    LightMaterial lightMaterial = (LightMaterial){{255, 255, 255, 255}, 1.0f};
+    Vector lightDirection = normalizeVector((Vector){0, 1, 0});
+
+    testLight = (SpotLight){(Vector){0, 1, 0}, lightDirection, 30.0f, 15.0f, lightMaterial};
+
+    testPoint = (Vector){0.3f, 0, 0};
+    testNormal = normalizeVector((Vector){0, 1, 0});
+
+    Vector viewDir = normalizeVector((Vector){0, 1, 0});
+
+    float result = computeSpotLightSpecular(&testLight, testPoint, testNormal,viewDir, 32.0f, &testScene);
+    TEST_ASSERT_GREATER_THAN_FLOAT(0.1f, result);
+    TEST_ASSERT_LESS_THAN_FLOAT(0.9f, result);   
+}
 
 // Test case: Point in shadow, no specular contribution
-void test_ComputeSpotLightSpecular_PointInShadow(void);
+void test_ComputeSpotLightSpecular_PointInShadow(void)
+{
+    Scene testScene;
+    SpotLight testLight;
+    Vector testPoint;
+    Plane shadowCastingPlane;
+    Vector testNormal;
+
+    testNormal = normalizeVector((Vector){0, 1, 0});
+
+    // Initialize scene
+    initScene(&testScene,5,5,5,5,5,5);
+
+    Material planeMaterial = (Material){{255, 255, 255, 255}, 0.5f, 0.5f};
+    Vector planePosition = (Vector){0, 1, 0};
+    Vector planeNormal = (Vector){0, 1, 0};
+
+    addPlane(&testScene, planePosition, planeNormal, 5, 5, planeMaterial);
+
+    LightMaterial lightMaterial = (LightMaterial){{255, 255, 255, 255}, 0.5f};
+    Vector lightDirection = normalizeVector((Vector){1, 1, 0});
+
+    testLight = (SpotLight){(Vector){0, 5, 0}, lightDirection, 30.0f, 15.0f, lightMaterial};
+
+    testPoint = (Vector){0, 0, 0};
+    Vector viewDir = normalizeVector((Vector){0, 1, 0});
+
+    float result = computeSpotLightSpecular(&testLight, testPoint, testNormal,viewDir, 32.0f, &testScene);
+    TEST_ASSERT_FLOAT_WITHIN(0.001f, 0.0f, result);
+}
+

@@ -53,6 +53,10 @@ void test_ComputeDirectionalLightSpecular_NormalFacingAway(void);
 void test_ComputeDirectionalLightSpecular_PerfectReflection(void);
 void test_ComputeDirectionalLightSpecular_PartialReflection(void);
 void test_ComputeDirectionalLightSpecular_PointInShadow(void);
+void test_ComputeSpotLightSpecular_PointOutsideCone(void);
+void test_ComputeSpotLightSpecular_PerfectReflection(void);
+void test_ComputeSpotLightSpecular_EdgeOfCone(void);
+void test_ComputeSpotLightSpecular_PointInShadow(void);
 
 
 void setUp(void) {}   // Runs before each test (optional)
@@ -119,6 +123,10 @@ int main(void) {
     RUN_TEST(test_ComputeDirectionalLightSpecular_PerfectReflection);
     RUN_TEST(test_ComputeDirectionalLightSpecular_PartialReflection);
     RUN_TEST(test_ComputeDirectionalLightSpecular_PointInShadow);
+    RUN_TEST(test_ComputeSpotLightSpecular_PointOutsideCone);
+    RUN_TEST(test_ComputeSpotLightSpecular_PerfectReflection);
+    RUN_TEST(test_ComputeSpotLightSpecular_EdgeOfCone);
+    RUN_TEST(test_ComputeSpotLightSpecular_PointInShadow);
 
     return UNITY_END();
 }
