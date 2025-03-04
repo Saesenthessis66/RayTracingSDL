@@ -46,6 +46,7 @@ void test_ComputeSpotLightDiffuse_PointInShadow(void);
 void test_ComputeSpotLightDiffuse_ZeroLightIntensity(void);
 void test_ComputeSpotLightDiffuse_NormalFacingAway(void);
 void test_ComputeSpotLightDiffuse_ValidDiffuse(void);
+
 void test_ComputePointLightSpecular_PointInShadow(void);
 void test_ComputePointLightSpecular_PerfectReflection(void);
 void test_ComputePointLightSpecular_PartialReflection(void);
@@ -58,6 +59,14 @@ void test_ComputeSpotLightSpecular_PerfectReflection(void);
 void test_ComputeSpotLightSpecular_EdgeOfCone(void);
 void test_ComputeSpotLightSpecular_PointInShadow(void);
 
+void test_ComputeSurfaceColor_NoLights(void);
+void test_ComputeSurfaceColor_MultipleLights(void);
+void test_ComputeSurfaceColor_HighShininess(void);
+void test_ComputeSurfaceColor_LowShininess(void);
+void test_ComputeSurfaceColor_SpecularAtAngle(void);
+void test_ComputeSurfaceColor_PurelySpecular(void);
+void test_ComputeSurfaceColor_LightOppositeNormal(void);
+void test_ComputeSurfaceColor_MaxIntensityClamping(void);
 
 void setUp(void) {}   // Runs before each test (optional)
 void tearDown(void) {} // Runs after each test (optional)
@@ -104,7 +113,7 @@ int main(void) {
     RUN_TEST(test_isPointInShadowDir);
     RUN_TEST(test_isPointInShadowSpot);
 
-    printf("\n===== Running Illumination Tests =====\n");
+    printf("\n===== Running Illumination Diffuse Tests =====\n");
     RUN_TEST(test_ComputePointLightDiffuse_PointInShadow);
     RUN_TEST(test_ComputePointLightDiffuse_ZeroLightIntensity);
     RUN_TEST(test_ComputePointLightDiffuse_NormalFacingAway);
@@ -116,6 +125,8 @@ int main(void) {
     RUN_TEST(test_ComputeSpotLightDiffuse_ZeroLightIntensity);
     RUN_TEST(test_ComputeSpotLightDiffuse_NormalFacingAway);
     RUN_TEST(test_ComputeSpotLightDiffuse_ValidDiffuse);
+
+    printf("\n===== Running Illumination Specular Tests =====\n");
     RUN_TEST(test_ComputePointLightSpecular_PointInShadow);
     RUN_TEST(test_ComputePointLightSpecular_PerfectReflection);
     RUN_TEST(test_ComputePointLightSpecular_PartialReflection);
@@ -127,6 +138,8 @@ int main(void) {
     RUN_TEST(test_ComputeSpotLightSpecular_PerfectReflection);
     RUN_TEST(test_ComputeSpotLightSpecular_EdgeOfCone);
     RUN_TEST(test_ComputeSpotLightSpecular_PointInShadow);
+
+    printf("\n===== Running Illumination Surface Color Tests =====\n");
 
     return UNITY_END();
 }

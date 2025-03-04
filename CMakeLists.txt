@@ -42,7 +42,9 @@ add_executable(run_tests
     tests/test_shapes.c
     tests/test_lights.c
     tests/test_scene.c
-    tests/test_illumination.c
+    tests/test_illumination_diffuse.c
+    tests/test_illumination_specular.c
+    tests/test_illumination_surface.c
     src/ray.c 
     src/camera.c
     src/shapes.c
