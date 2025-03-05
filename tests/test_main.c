@@ -63,8 +63,6 @@ void test_ComputeSurfaceColor_NoLights(void);
 void test_ComputeSurfaceColor_MultipleLights(void);
 void test_ComputeSurfaceColor_HighShininess(void);
 void test_ComputeSurfaceColor_LowShininess(void);
-void test_ComputeSurfaceColor_SpecularAtAngle(void);
-void test_ComputeSurfaceColor_PurelySpecular(void);
 void test_ComputeSurfaceColor_LightOppositeNormal(void);
 void test_ComputeSurfaceColor_MaxIntensityClamping(void);
 
@@ -140,6 +138,12 @@ int main(void) {
     RUN_TEST(test_ComputeSpotLightSpecular_PointInShadow);
 
     printf("\n===== Running Illumination Surface Color Tests =====\n");
+    RUN_TEST(test_ComputeSurfaceColor_NoLights);
+    RUN_TEST(test_ComputeSurfaceColor_MultipleLights);
+    RUN_TEST(test_ComputeSurfaceColor_HighShininess);
+    RUN_TEST(test_ComputeSurfaceColor_LowShininess);
+    RUN_TEST(test_ComputeSurfaceColor_LightOppositeNormal);
+    RUN_TEST(test_ComputeSurfaceColor_MaxIntensityClamping);
 
     return UNITY_END();
 }
