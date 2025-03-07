@@ -58,35 +58,37 @@ SDL_AppResult SDL_AppEvent(void *appstate, SDL_Event *event)
         switch (event->key.key) { 
             case SDLK_W:
                 /* Move forward */
-                camera.position.z -= 0.8f;
+                moveCameraForward(&camera);
                 break;
             case SDLK_S:
                 /* Move backward */
-                camera.position.z += 0.8f;
+                moveCameraBackward(&camera);
                 break;
             case SDLK_A:
                 /* Move left */
-                camera.position.x -= 0.8f;
+                moveCameraLeft(&camera);
                 break;
             case SDLK_D:
                 /* Move right */
-                camera.position.x += 0.8f;
+                moveCameraRight(&camera);
                 break;
             case SDLK_R:
-                /* Move left */
-                camera.position.y += 0.8f;
+                moveCameraUp(&camera);
                 break;
             case SDLK_F:
-                /* Move right */
-                camera.position.y -= 0.8f;
+                moveCameraDown(&camera);
                 break;
             case SDLK_Q:
-                /* Move left */
                 rotateCameraRight(&camera);
                 break;
             case SDLK_E:
-                /* Move right */
                 rotateCameraLeft(&camera);
+                break;
+            case SDLK_O:
+                rotateCameraUp(&camera);
+                break;
+            case SDLK_P:
+                rotateCameraDown(&camera);
                 break;
             default:
                 break;

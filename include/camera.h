@@ -19,4 +19,34 @@ void initCamera(Camera* camera, Vector pos, Vector dir, Vector up, float fov, in
 // Function to generate a ray from a given pixel position on the screen
 Ray mapPixelToRay(Camera* camera, int pixelX, int pixelY, int screenWidth, int screenHeight);
 
+// Function to move the camera forward along the direction vector
+void moveCameraForward(Camera* camera);
+
+// Function to move the camera backward along the direction vector
+void moveCameraBackward(Camera* camera);
+
+// Function to move the camera left along the right vector
+void moveCameraLeft(Camera* camera);
+
+// Function to move the camera right along the right vector
+void moveCameraRight(Camera* camera);
+
+// Function to move the camera up along the up vector
+void moveCameraUp(Camera* camera);
+
+// Function to move the camera down along the up vector
+void moveCameraDown(Camera* camera);
+
+// Function to rotate the camera up around the right vector
+void rotateCameraUp(Camera* camera);
+
+// Function to rotate the camera down around the right vector
+void rotateCameraDown(Camera* camera);
+
+// Function to rotate the camera left around the up vector
+void rotateCameraLeft(Camera* camera);
+
+// Function to rotate the camera right around the up vector
+void rotateCameraRight(Camera* camera);
+
 #endif // CAMERA_H
