@@ -8,6 +8,7 @@
 typedef struct {
     Objects objects;  // Objects contained in the scene (spheres, planes, triangles)
     SceneLights lights; // Lights contained in the scene (point lights, directional lights, spotlights, and ambient light)
+    BVHNode* bvhRoot; // BVH root node
 } Scene;
 
 // Function to initialize a scene with dynamic memory allocation for spheres, planes, and triangles

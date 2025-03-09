@@ -4,6 +4,7 @@
         "unity.h": "c",
         "ray.h": "c",
         "math.h": "c",
-        "illumination.h": "c"
+        "illumination.h": "c",
+        "bvh.h": "c"
     }
 }
