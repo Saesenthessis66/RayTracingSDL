@@ -14,14 +14,13 @@ typedef struct BVHNode {
     AABB bounds;           // Bounding box
     struct BVHNode* left;  // Left child
     struct BVHNode* right; // Right child
-    Objects* objects;      // Pointer to objects (only in leaf nodes)
-    int objectCount;       // Number of objects in this node
+    int objectIndex;       // Index of the object (only in leaf nodes)
 } BVHNode;
 
 // Compute AABB for a single sphere
 AABB computeSphereAABB(Sphere* sphere);
 
-// Compute AABB for a single plane (optional, if needed)
+// Compute AABB for a single plane
 AABB computePlaneAABB(Plane* plane);
 
 // Compute AABB for a single triangle
@@ -30,7 +29,10 @@ AABB computeTriangleAABB(Triangle* triangle);
 // Build the BVH Tree
 BVHNode* buildBVH(Objects* objects, int start, int end);
 
-// Intersect Ray with BVH
-int intersectBVH(Ray ray, BVHNode* node, ObjectIntersection* hit);
+// Check for intersection between Ray and AABB
+int intersectAABB(Ray ray, AABB box);
+
+// Check for intersection between Ray and BVH Tree
+int intersectBVH(Ray ray, BVHNode* node, ObjectIntersection* hit, Objects* objects);
 
 #endif // BVH_H
