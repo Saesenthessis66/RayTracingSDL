@@ -3,18 +3,18 @@
 
 #include "render_functions.h"
 
-/// Axis-Aligned Bounding Box (AABB)
+// Axis-Aligned Bounding Box (AABB)
 typedef struct {
     Vector min;  // Minimum corner
     Vector max;  // Maximum corner
 } AABB;
 
-/// BVH Node Structure
+// BVH Node Structure
 typedef struct BVHNode {
     AABB bounds;           // Bounding box
     struct BVHNode* left;  // Left child
     struct BVHNode* right; // Right child
-    int objectIndex;       // Index of the object (only in leaf nodes)
+    Objects objects;       // Objects in the leaf node
 } BVHNode;
 
 // Compute AABB for a single sphere
@@ -27,7 +27,7 @@ AABB computePlaneAABB(Plane* plane);
 AABB computeTriangleAABB(Triangle* triangle);
 
 // Build the BVH Tree
-BVHNode* buildBVH(Objects* objects, int start, int end);
+BVHNode* buildBVH(Objects* objects);
 
 // Check for intersection between Ray and AABB
 int intersectAABB(Ray ray, AABB box);
