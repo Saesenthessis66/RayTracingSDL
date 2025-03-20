@@ -1,14 +1,19 @@
 #ifndef SCENE_H
 #define SCENE_H
 
-#include "shapes.h"  // Include the shapes header file to use Objects, Sphere, Plane, Triangle, and Material types
-#include "light_sources.h"
+#include "shapes.h"        
+#include "light_sources.h" 
+
+// ✅ Forward declare BVHNode instead of including bvh.h
+typedef struct BVHNode BVHNode;
+
+struct BVHNode; // Forward declaration of BVHNode
 
 // Structure representing a scene with various objects
 typedef struct {
     Objects objects;  // Objects contained in the scene (spheres, planes, triangles)
     SceneLights lights; // Lights contained in the scene (point lights, directional lights, spotlights, and ambient light)
-    BVHNode* bvhRoot; // BVH root node
+    BVHNode* bvhRoot; // Root node of the BVH tree
 } Scene;
 
 // Function to initialize a scene with dynamic memory allocation for spheres, planes, and triangles

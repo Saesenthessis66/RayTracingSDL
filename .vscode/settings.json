@@ -5,6 +5,9 @@
         "ray.h": "c",
         "math.h": "c",
         "illumination.h": "c",
-        "bvh.h": "c"
+        "bvh.h": "c",
+        "render_functions.h": "c",
+        "camera.h": "c",
+        "scene.h": "c"
     }
 }

@@ -1,8 +1,13 @@
 #ifndef ILLUMINATION_H
 #define ILLUMINATION_H
 
-#include "scene.h"
 #include <SDL3/SDL.h>
+#include "ray.h"           // For Vector
+#include "shapes.h"        // For Material
+#include "light_sources.h" // For PointLight, DirectionalLight, SpotLight
+#include "scene.h"         
+
+struct Scene; // Forward declaration of Scene
 
 // Computes the diffuse lighting contribution from a point light source at a given point
 float computePointLightDiffuse(PointLight* light, Vector point, Vector normal, Scene* scene);
