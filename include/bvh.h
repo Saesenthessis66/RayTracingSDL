@@ -54,4 +54,7 @@ float intersectAABB(Ray ray, AABB box);
 // Recursively checks for ray intersections with a BVH (Bounding Volume Hierarchy) tree.
 int intersectBVH(Ray ray, BVHNode* node, ObjectIntersection* hit);
 
+// Free the BVH tree
+void freeBVH(BVHNode *node);
+
 #endif // BVH_H

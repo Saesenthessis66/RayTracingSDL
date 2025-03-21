@@ -54,6 +54,7 @@ SDL_Color computePixelColor(int WINDOW_WIDTH, int WINDOW_HEIGHT, int x, int y, C
     Ray viewRay;
     SDL_Color pixelColor;
     ObjectIntersection closestIntersection;
+    closestIntersection.material = (Material){{0, 0, 0, 0}, 0, 0};
 
     // Map the pixel coordinates to a ray.
     viewRay = mapPixelToRay(camera, x, y, WINDOW_WIDTH, WINDOW_HEIGHT);

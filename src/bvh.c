@@ -15,16 +15,32 @@ AABB computeSphereAABB(Sphere* sphere)
     return box;
 }
 
-AABB computePlaneAABB(Plane* plane) 
-{
+AABB computePlaneAABB(Plane* plane) {
     AABB box;
-    box.min.x = plane->position.x - plane->width / 2;
-    box.min.y = plane->position.y;
-    box.min.z = plane->position.z - plane->height / 2;
 
-    box.max.x = plane->position.x + plane->width / 2;
-    box.max.y = plane->position.y;
-    box.max.z = plane->position.z + plane->height / 2;
+    // Compute half-extents
+    float halfWidth = plane->width / 2.0f;
+    float halfHeight = plane->height / 2.0f;
+
+    // Compute the four corners of the plane
+    Vector corners[4];
+    corners[0] = addVectors(plane->position, addVectors(multiplyVector(plane->u, halfWidth), multiplyVector(plane->v, halfHeight)));
+    corners[1] = addVectors(plane->position, addVectors(multiplyVector(plane->u, halfWidth), multiplyVector(plane->v, -halfHeight)));
+    corners[2] = addVectors(plane->position, addVectors(multiplyVector(plane->u, -halfWidth), multiplyVector(plane->v, halfHeight)));
+    corners[3] = addVectors(plane->position, addVectors(multiplyVector(plane->u, -halfWidth), multiplyVector(plane->v, -halfHeight)));
+
+    // Compute AABB min/max
+    box.min = corners[0];
+    box.max = corners[0]; 
+    for (int i = 1; i < 4; i++) {
+        box.min.x = SDL_min(box.min.x, corners[i].x);
+        box.min.y = SDL_min(box.min.y, corners[i].y);
+        box.min.z = SDL_min(box.min.z, corners[i].z);
+
+        box.max.x = SDL_max(box.max.x, corners[i].x);
+        box.max.y = SDL_max(box.max.y, corners[i].y);
+        box.max.z = SDL_max(box.max.z, corners[i].z);
+    }
 
     return box;
 }
@@ -162,7 +178,7 @@ BVHNode *buildBVH(Objects *objects)
     }
 
     // Base case: If the number of objects is small, store them in a leaf node
-    if(numberOfObjects <= 3)
+    if(numberOfObjects <= 2)
     {
         node->objects = *objects;
         node->left = NULL;
@@ -485,4 +501,23 @@ int intersectBVH(Ray ray, BVHNode *node, ObjectIntersection *hit)
     }
 
     return 0; // No intersection found in this subtree
+}
+
+void freeBVH(BVHNode *node)
+{
+    if (node == NULL) {
+        return;
+    }
+
+    // Recursively free left and right child nodes
+    freeBVH(node->left);
+    freeBVH(node->right);
+
+    // Free the dynamically allocated objects' arrays
+    free(node->objects.planes);
+    free(node->objects.spheres);
+    free(node->objects.triangles);
+
+    // Free the BVH node itself
+    free(node);
 }
