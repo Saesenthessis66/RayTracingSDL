@@ -5,14 +5,14 @@ It includes **unit tests** with the **Unity** test framework.
 
 ## 🛠 SDL3 Installation (MSYS2 UCRT)
 
-1. **Open the MSYS2 UCRT64 terminal** (⚠️ Not MSYS or MINGW!).
+1. **Open the MSYS2 UCRT64 terminal**.
 
 2. **Install SDL3**:
    ```sh
    pacman -S mingw-w64-ucrt-x86_64-SDL3 
    ```
 
-## 🚀 Build the Project
+## Build the Project
 
 1. **Clone the repository**:
    ```sh
@@ -41,7 +41,7 @@ It includes **unit tests** with the **Unity** test framework.
    ./RayTracingSDL
    ```
 
-## ✅ Running Unit Tests
+## Running Unit Tests
 
 The project includes unit tests using the [Unity](https://github.com/ThrowTheSwitch/Unity) framework.  
 Tests are automatically downloaded via **CMake FetchContent**.
@@ -51,8 +51,3 @@ To run the tests:
 ```sh
 ./build/run_tests
 ```
-
-## 🎨 Features
-- Ray tracing engine written in **C**
-- Uses **SDL3** for rendering
-- Lightweight **unit testing** with **Unity**
