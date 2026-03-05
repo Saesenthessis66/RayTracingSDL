@@ -3,7 +3,7 @@
 RayTracingSDL is a simple ray tracing project written in C, using the **SDL3** library for rendering.  
 It includes **unit tests** with the **Unity** test framework.
 
-## 🛠 SDL3 Installation (MSYS2 UCRT)
+## SDL3 Installation (MSYS2 UCRT)
 
 1. **Open the MSYS2 UCRT64 terminal**.
 
